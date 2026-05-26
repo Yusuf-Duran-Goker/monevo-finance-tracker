@@ -214,7 +214,7 @@ export default function Transactions() {
             <form onSubmit={handleSubmit} style={{ padding: '32px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', padding: '4px', background: C.surfaceHigh, borderRadius: '12px', gap: '4px' }}>
                 {['expense', 'income'].map(type => (
-                  <button key={type} type="button" onClick={() => setForm({ ...form, type })}
+                  <button key={type} type="button" onClick={() => setForm({ ...form, type, category: '' })}
                     style={{ padding: '12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '15px', fontWeight: form.type === type ? 700 : 500, fontFamily: "'Inter', sans-serif", background: form.type === type ? C.surfaceLowest : 'transparent', color: form.type === type ? C.primary : C.onSurfaceVariant, boxShadow: form.type === type ? '0 1px 4px rgba(0,0,0,0.08)' : 'none', transition: 'all 0.15s', textTransform: 'capitalize' }}>
                     {type.charAt(0).toUpperCase() + type.slice(1)}
                   </button>
@@ -258,7 +258,7 @@ export default function Transactions() {
                   <select required value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
                     style={{ ...inputCls, appearance: 'none', cursor: 'pointer', paddingRight: '40px' }}>
                     <option value="">Select Category</option>
-                    {categories.map(c => <option key={c._id} value={c.name}>{c.name}</option>)}
+                    {categories.filter(c => c.type === form.type || c.type === 'both').map(c => <option key={c._id} value={c.name}>{c.name}</option>)}
                   </select>
                   <span className="material-symbols-outlined" style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', fontSize: '20px', color: C.onSurfaceVariant, pointerEvents: 'none' }}>expand_more</span>
                 </div>
